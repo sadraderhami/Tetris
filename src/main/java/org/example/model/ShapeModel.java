@@ -2,20 +2,20 @@ package org.example.model;
 
 import java.awt.*;
 
-public class Shape {
+public class ShapeModel {
     private ShapeType type;
     private int rotationIndex = 0;
-    private boolean stable = false;
+//    private boolean stable = false;
 
-    public Shape(ShapeType type) {
+    public ShapeModel(ShapeType type) {
         this.type = type;
     }
 
-    public static Shape getRandomShape() {
+    public static ShapeModel getRandomShape() {
         return null;
     }
 
-    public Point[] getCurrentPoints() {
+    public CellBlockModel[] getCurrentPoints() {
         return type.getRotation(rotationIndex);
     }
 
@@ -26,6 +26,7 @@ public class Shape {
     public void rotateCounterClockwise() {
         rotationIndex = (rotationIndex + 3) % 4;
     }
+
     public ShapeType getType() {
         return type;
     }

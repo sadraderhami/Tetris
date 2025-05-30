@@ -4,6 +4,11 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
+import org.example.config.ViewConstants.*;
+
+import static org.example.config.ViewConstants.GameConstants.*;
+import static org.example.config.ViewConstants.GameConstants.SidePanelConstants.*;
+
 public class SidePanel extends JPanel {
     private JLabel labelScore;
     private JLabel labelScoreUpdateLocal;
@@ -25,17 +30,19 @@ public class SidePanel extends JPanel {
     public void initLabelScore() {
         labelScore = new JLabel("Score", SwingConstants.CENTER);
         labelScore.setForeground(Color.WHITE);
-        labelScore.setFont(new Font("Arial", Font.BOLD, 15));
-        labelScore.setBounds(40, 30, 100, 24);
+        labelScore.setFont(BUTTON_FONT);
+        labelScore.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        labelScore.setLocation((SIDE_PANEL_WIDTH - BUTTON_WIDTH) / 2, BUTTON_HEIGHT);
         this.add(labelScore);
     }
 
     public void initLabelScoreUpdateLocal() {
         labelScoreUpdateLocal = new JLabel("0", SwingConstants.CENTER);
         labelScoreUpdateLocal.setOpaque(true);
-        labelScoreUpdateLocal.setBackground(new Color(150, 150, 255));
-        labelScoreUpdateLocal.setFont(new Font("Arial", Font.BOLD, 10));
-        labelScoreUpdateLocal.setBounds(40, 60, 100, 38);
+        labelScoreUpdateLocal.setBackground(BUTTON_COLOR);
+        labelScoreUpdateLocal.setFont(BUTTON_FONT);
+        labelScoreUpdateLocal.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        labelScoreUpdateLocal.setLocation((SIDE_PANEL_WIDTH - BUTTON_WIDTH) / 2, 2 * BUTTON_HEIGHT);
         this.add(labelScoreUpdateLocal);
     }
 }

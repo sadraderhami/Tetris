@@ -1,0 +1,36 @@
+{
+  "cellSize": 40,
+  "frameWidth": 640,
+  "frameHeight": 680,
+  "buttonColor": "#FFC400",
+  "backgroundTopColor": "#21B600",
+  "backgroundBottomColor": "#84FF00",
+  "glowingLineFirstShadow": "#231600",
+  "glowingLineSecondShadow": "#594000",
+  "glowingLineThirdShadow": "#A17C00",
+
+  "menuConstants": {
+    "buttonHeight": 40,
+    "buttonWidth": 160,
+    "buttonMargin": 40,
+    "buttonFontName": "Bauhaus 93",
+    "buttonFontStyle": "BOLD",
+    "buttonFontSize": 20
+  },
+
+  "gameConstants": {
+    "buttonHeight": 40,
+    "buttonWidth": 160,
+    "buttonFontName": "Bauhaus 93",
+    "buttonFontStyle": "BOLD",
+    "buttonFontSize": 20,
+
+    "tetrisPanelConstants": {
+      "tetrisPanelWidth": 400
+    },
+
+    "sidePanelConstants": {
+      "sidePanelWidth": 240
+    }
+  }
+}

@@ -40,7 +40,7 @@
 //    int panelScore = 0;
 //    Timer timer;
 //    KeyListener listener;
-//    org.example.view.MyFrame.GamePanel gamePanel;
+//    org.example.view.MyJFrame.TetrisPanel gamePanel;
 //    JPanel sidePanel;
 //
 //    public TempCopy() {
@@ -50,7 +50,7 @@
 //        setResizable(false);
 //
 ////        listener = new CustomKeyListener();
-//        gamePanel = new org.example.view.MyFrame.GamePanel();
+//        gamePanel = new org.example.view.MyJFrame.TetrisPanel();
 //        initGamePanel();
 //
 //        sidePanel = new SidePanel();
@@ -316,7 +316,7 @@
 //        return min;
 //    }
 //
-//    class GamePanel extends JPanel {
+//    class TetrisPanel extends JPanel {
 //        public void paintComponent(Graphics g) {
 //            gamePanel.setFocusable(true);
 //            gamePanel.requestFocusInWindow();

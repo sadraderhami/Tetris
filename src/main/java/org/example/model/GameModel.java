@@ -1,6 +1,5 @@
 package org.example.model;
 
-import javax.swing.*;
 import java.util.Random;
 
 public class GameModel {
@@ -23,15 +22,41 @@ public class GameModel {
 
     int[] shapeStartingPosition = {4, 0};
     String shape;
-//    Shape shape;
+    ShapeModel currentShape = new ShapeModel(ShapeType.S);
     int angle;
     boolean shapeReachedBottom = false;
     boolean newShapeGenerated = false;
     boolean paused = false;
     boolean started = false;
     int panelScore = 0;
-    Timer timer;
-    void startGame() {
+//    Timer timer;
+
+
+
+    public GameModel() {
+//        timer = new Timer(300, e -> {
+//            dropShape();
+////            labelScoreUpdateLocal.setText(String.valueOf(panelScore));
+//        });
+    }
+
+    public ShapeModel getCurrentShape() {
+        return currentShape;
+    }
+
+    public boolean isGameOver(){
+        return false;
+    }
+
+    public boolean[][] getBoardCells() {
+        return boardCells;
+    }
+
+    public void update(){
+        dropShape();
+    }
+
+    public void startGame() {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 10; j++) {
                 boardCells[i][j] = false;
@@ -40,10 +65,10 @@ public class GameModel {
         generateNewShape();
         started = true;
         paused = false;
-        timer.start();
+//        timer.start();
     }
 
-    void resetGame() {
+    public void resetGame() {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 10; j++) {
                 boardCells[i][j] = false;
@@ -51,10 +76,10 @@ public class GameModel {
         }
         generateNewShape();
         panelScore = 0;
-        timer.stop();
+//        timer.stop();
     }
 
-    void generateNewShape() {
+    public void generateNewShape() {
         shapeReachedBottom = false;
         shapeStartingPosition[0] = 4;
         shapeStartingPosition[1] = 0;
@@ -73,7 +98,7 @@ public class GameModel {
         return false;
     }
 
-    void dropShape() {
+    public void dropShape() {
         int maxY = getMax(getYCoordinates());
         int bottom = shapeStartingPosition[1] + maxY;
         boolean collision = false;
@@ -98,12 +123,12 @@ public class GameModel {
             if (!gameOver()) {
                 generateNewShape();
             } else {
-                timer.stop();
+//                timer.stop();
             }
         }
     }
 
-    void moveRight() {
+    public void moveRight() {
         int maxX = getMax(getXCoordinates());
         int right = shapeStartingPosition[0] + maxX;
         boolean collision = false;
@@ -122,7 +147,7 @@ public class GameModel {
         }
     }
 
-    void moveLeft() {
+    public void moveLeft() {
         int minX = getMin(getXCoordinates());
         int left = shapeStartingPosition[0] + minX;
         boolean collision = false;
@@ -141,7 +166,7 @@ public class GameModel {
         }
     }
 
-    void rotate() {
+    public void rotate() {
         int oldAngle = angle;
         angle = (angle == 0 ? 3 : angle - 1);
         int[] xs = getXCoordinates();
@@ -156,7 +181,7 @@ public class GameModel {
         }
     }
 
-    void clearFullLines() {
+    public void clearFullLines() {
         int linesCleared = 0;
         for (int i = 20 - 1; i >= 0; i--) {
             boolean full = true;

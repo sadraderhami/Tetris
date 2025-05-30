@@ -1,12 +1,13 @@
 package org.example.controller;
 
-import org.example.view.MyFrame;
+import org.example.model.MyLevel;
+import org.example.view.MyJFrame;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class FrameController {
-    private MyFrame frame;
+    private MyJFrame frame;
     private JPanel mainPanel;
     private CardLayout cardLayout;
 
@@ -14,25 +15,27 @@ public class FrameController {
     private GameController gameController;
     public static final String MENU = "menuPanel";
     public static final String GAME = "gamePanel";
+
     public FrameController() {
-        frame = new MyFrame();
+        frame = new MyJFrame();
 
         menuController = new MenuController(this);
         gameController = new GameController(this);
         mainPanel = frame.getMainPanel();
         cardLayout = frame.getCardLayout();
-//        menuController.getMenuPanel().setMenuController(menuController);
-//        gameController.getGamePanel().setGameController(gameController);
+
 
         mainPanel.add(menuController.getMenuPanel(), MENU);
-        mainPanel.add(gameController.getGamePanel(), GAME);
+        mainPanel.add(gameController.getGameView().getGamePanel(), GAME);
+
     }
+
     public void showMenu() {
         cardLayout.show(mainPanel, MENU);
     }
 
-    public void startGame(int level) {
-//        gameController.initializeLevel(MyLevel.level1);
+    public void startGame(MyLevel level) {
+        gameController.startGame(level);
         cardLayout.show(mainPanel, GAME);
 
     }
@@ -46,7 +49,7 @@ public class FrameController {
         return cardLayout;
     }
 
-    public MyFrame getFrame() {
+    public MyJFrame getFrame() {
         return frame;
     }
 }
