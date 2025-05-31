@@ -60,18 +60,24 @@
 package org.example.config;
 
 import com.google.gson.*;
+
 import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class ConfigManager {
     private JsonObject rootObject;
+    private ConfigManager instance;
 
     // Load from a file path (e.g., when running from IDE or packaged jar with external config)
-    public ConfigManager(String filePath) throws IOException {
+    private ConfigManager(String filePath) throws IOException {
         try (Reader reader = new FileReader(filePath)) {
             rootObject = JsonParser.parseReader(reader).getAsJsonObject();
         }
+    }
+
+    public static ConfigManager getInstance(String filePath) throws IOException {
+        return new ConfigManager(filePath);
     }
 
     // Alternate: Load from resources folder (e.g., src/main/resources/config/config.json)
@@ -133,10 +139,11 @@ public class ConfigManager {
                     if (hex.length() == 6) {
                         return new Color((int) rgba);
                     } else {
-                        return new Color((int)(rgba >> 8), true); // assumes ARGB
+                        return new Color((int) (rgba >> 8), true); // assumes ARGB
                     }
                 }
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+            }
         }
         return defaultColor;
     }

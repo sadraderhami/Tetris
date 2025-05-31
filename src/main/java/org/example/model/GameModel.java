@@ -5,10 +5,6 @@ import static org.example.config.ModelConstants.*;
 public class GameModel {
     private boolean[][] boardCells = new boolean[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
     private ShapeModel currentShape;
-//    private boolean shapeReachedBottom = false;
-//    private boolean newShapeGenerated = false;
-//    private boolean paused = false;
-//    private boolean started = false;
     private int score = 0;
 
     public ShapeModel getCurrentShape() {
@@ -50,8 +46,7 @@ public class GameModel {
 
     public boolean isGameOver() {
         for (int j = 0; j < NUMBER_OF_COLUMNS; j++) {
-            if (boardCells[10][j])
-//
+            if (boardCells[0][j])
                 return true;
         }
         return false;

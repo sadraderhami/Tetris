@@ -52,12 +52,41 @@ public class ViewConstants {
             public static GradientPaint GAME_PANEL_GRADIANT_PAINT = new GradientPaint(0, 0, BACKGROUND_TOP_COLOR, 0, GAME_PANEL_HEIGHT, BACKGROUND_BOTTOM_COLOR);
             public static Color STABLE_TETROMINO_COLOR = new Color(0, 255, 111);
             public static Color ACTIVE_TETROMINO_COLOR = Color.MAGENTA;
+
+            public static void reevaluateSizes(int numberOfRows, int numberOfColumns) {
+                NUMBER_OF_ROWS = numberOfRows;
+                NUMBER_OF_COLUMNS = numberOfColumns;
+                TETRIS_PANEL_WIDTH = NUMBER_OF_ROWS * CELL_SIZE;
+                TETRIS_PANEL_HEIGHT = GAME_PANEL_HEIGHT;
+            }
         }
 
         public static class SidePanelConstants {
             public static int SIDE_PANEL_WIDTH = GAME_PANEL_WIDTH - TetrisPanelConstants.TETRIS_PANEL_WIDTH;
             public static int SIDE_PANEL_HEIGHT = GAME_PANEL_HEIGHT;
+
+            public static void reevaluateSizes(int numberOfRows, int numberOfColumns) {
+                NUMBER_OF_ROWS = numberOfRows;
+                NUMBER_OF_COLUMNS = numberOfColumns;
+                SIDE_PANEL_WIDTH = GAME_PANEL_WIDTH - TetrisPanelConstants.TETRIS_PANEL_WIDTH;
+                SIDE_PANEL_HEIGHT = GAME_PANEL_HEIGHT;
+            }
         }
+
+        public static void reevaluateSizes(int numberOfRows, int numberOfColumns) {
+            NUMBER_OF_ROWS = numberOfRows;
+            NUMBER_OF_COLUMNS = numberOfColumns;
+            GAME_PANEL_WIDTH = NUMBER_OF_ROWS * CELL_SIZE;
+            GAME_PANEL_HEIGHT = NUMBER_OF_COLUMNS * CELL_SIZE;
+            TetrisPanelConstants.reevaluateSizes(numberOfRows, numberOfColumns);
+            SidePanelConstants.reevaluateSizes(numberOfRows, numberOfColumns);
+        }
+    }
+
+    public static void reevaluateSizes(int numberOfRows, int numberOfColumns) {
+        NUMBER_OF_ROWS = numberOfRows;
+        NUMBER_OF_COLUMNS = numberOfColumns;
+        GameConstants.reevaluateSizes(numberOfRows, numberOfColumns);
     }
 
     // --------- Loader method ---------

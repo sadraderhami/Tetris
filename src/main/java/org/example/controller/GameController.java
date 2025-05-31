@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import org.example.model.GameModel;
-import org.example.model.MyLevel;
 import org.example.view.GameView;
 
 import javax.swing.*;
@@ -40,12 +39,6 @@ public class GameController {
         gameView.getGamePanel().getGameOverPanel().addActionListenerToButtons(gameOverPanelActionListener);
     }
 
-
-    public void startGame(MyLevel level) {
-        gameModel.startGame();
-        startGameLoop();
-    }
-
     public GameView getGameView() {
         return gameView;
     }
@@ -54,13 +47,13 @@ public class GameController {
         SwingUtilities.invokeLater(() -> {
             giveFocusToTetrisPanel();
             gameModel.startGame();
+            gameView.revalidate();
         });
         timer = new Timer(DROP_INTERVAL, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameModelLoopUpdate();
                 gameViewLoopUpdate();
-
             }
         });
         timer.start();
@@ -74,25 +67,16 @@ public class GameController {
     public void gameModelLoopUpdate() {
         dropShapeIfPossible();
         if (gameModel.isGameOver()) {
-            timer.stop(); // ✅ Controller stops the loop
+            timer.stop();
             handleGameOver();
         }
     }
-
-
-//    public void updatingLoop() {
-//        if (gameModel.isGameOver()) {
-//            GameController.this.handleGameOVer();
-//        }
-//        gameView.repaint();
-//    }
 
     private void giveFocusToTetrisPanel() {
         gameView.getGamePanel().getTetrisPanel().requestFocusInWindow();
     }
 
     public void handleGameOver() {
-        System.out.println("game over");
         timer.stop();
         gameView.handleGameOver(gameModel);
         gameModel.handleGameOver();

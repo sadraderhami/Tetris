@@ -66,6 +66,13 @@ public class GamePanel extends JPanel {
         tetrisPanel.reset();
     }
 
+    public void revalidateSizes(){
+        tetrisPanel.setSize(TETRIS_PANEL_WIDTH, TETRIS_PANEL_HEIGHT);
+        tetrisPanel.revalidate();
+        sidePanel.setSize(SIDE_PANEL_WIDTH, SIDE_PANEL_HEIGHT);
+        sidePanel.revalidate();
+    }
+
     public void showGameOverPanel() {
         tetrisPanel.setVisible(false);
         sidePanel.setVisible(false);

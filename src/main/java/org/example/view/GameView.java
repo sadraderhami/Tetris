@@ -22,8 +22,13 @@ public class GameView {
         gamePanel.revalidate();
     }
 
+    public void revalidateSizes() {
+        gamePanel.setSize(GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
+        gamePanel.revalidateSizes();
+    }
+
     public void reset() {
-        this.revalidate();
+        this.revalidateSizes();
         this.repaint();
         this.getGamePanel().reset();
     }

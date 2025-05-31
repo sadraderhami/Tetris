@@ -1,6 +1,9 @@
 package org.example.controller;
 
+import org.example.config.ModelConstants;
+import org.example.config.ResourcePaths;
 import org.example.model.MyLevel;
+import org.example.model.Speed;
 import org.example.view.MenuPanel;
 
 
@@ -12,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
+import java.util.Random;
 
 public class MenuController {
     private FrameController frameController;
@@ -22,13 +27,14 @@ public class MenuController {
     public MenuController(FrameController frameController) {
         this.frameController = frameController;
         menuPanel = new MenuPanel();
-        newListener();
+        newListeners();
         addListeners();
         play();
     }
-    private void newListener() {
-        newActionListener();
-        newChangeListener();
+
+    private void newListeners() {
+        newActionListeners();
+        newChangeListeners();
     }
 
     private void addListeners() {
@@ -37,6 +43,8 @@ public class MenuController {
             button.addActionListener(actionListener);
         }
         menuPanel.getVolumeSlider().addChangeListener(changeListener);
+        menuPanel.getSizeSelector().addActionListener(actionListener);
+        menuPanel.getSpeedSelector().addActionListener(actionListener);
     }
 
     private void play() {
@@ -46,7 +54,7 @@ public class MenuController {
             clip = AudioSystem.getClip();
             AudioInputStream inputStream = null;
 //            inputStream = AudioSystem.getAudioInputStream(new File("src\\main\\resources\\1-second-of-silence.wav"));
-            inputStream = AudioSystem.getAudioInputStream(new File("src\\main\\resources\\My_Azizam.wav"));
+            inputStream = AudioSystem.getAudioInputStream(new File(ResourcePaths.BACKGROUND_MUSIC_PATH));
 
             clip.open(inputStream);
 
@@ -60,10 +68,6 @@ public class MenuController {
 
     public MenuPanel getMenuPanel() {
         return menuPanel;
-    }
-
-    public void setMenuPanel(MenuPanel menuPanel) {
-        this.menuPanel = menuPanel;
     }
 
     private void levels() {
@@ -90,18 +94,16 @@ public class MenuController {
             // Convert int to MyLevel enum - adjust based on your MyLevel implementation
             return MyLevel.values()[levelNumber - 1]; // assuming 1-based indexing
         }
-        return MyLevel.ONE; // default fallback
+        return MyLevel.DEFAULT; // default fallback
     }
 
-    private void newActionListener() {
+    private void newActionListeners() {
         actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Object source = e.getSource();
-
                 if (source == menuPanel.getStartButton()) {
-                    // You need to specify which level to start - maybe default level?
-                    startLevel(MyLevel.ONE); // or however you define default
+                    startLevel(MyLevel.DEFAULT); // or however you define default
                 } else if (source == menuPanel.getLevelsButton()) {
                     levels();
                 } else if (source == menuPanel.getSettingsButton()) {
@@ -110,18 +112,43 @@ public class MenuController {
                         source == menuPanel.getBackFromLevelsButton()) {
                     goToMenu();
                 } else if (menuPanel.getLevelButtons().contains(source)) {
-                    // Extract level from button - adjust this based on your button setup
                     String buttonText = ((JButton) source).getText();
                     MyLevel selectedLevel = extractLevelFromButton(buttonText);
                     startLevel(selectedLevel);
                 } else if (source == menuPanel.getExitButton()) {
                     System.exit(0);
+                } else if (source == menuPanel.getSizeSelector()) {
+                    switch (menuPanel.getSizeSelector().getSelectedIndex()) {
+                        case (0) -> {
+//                            ModelConstants.setSizeOfTetris(8,8);
+                            frameController.revalidateSizes();
+
+                        }
+                        case (1) -> {
+
+                        }
+                        case (2) -> {
+
+                        }
+                    }
+                } else if (source == menuPanel.getSpeedSelector()) {
+                    switch (menuPanel.getSpeedSelector().getSelectedIndex()) {
+                        case (0) -> {
+                            ModelConstants.setDropInterval(Speed.SLOW.getTimeInterval());
+                        }
+                        case (1) -> {
+                            ModelConstants.setDropInterval(Speed.MEDIUM.getTimeInterval());
+                        }
+                        case (2) -> {
+                            ModelConstants.setDropInterval(Speed.FAST.getTimeInterval());
+                        }
+                    }
                 }
             }
         };
     }
 
-    private void newChangeListener() {
+    private void newChangeListeners() {
         changeListener = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -129,24 +156,5 @@ public class MenuController {
             }
         };
     }
-
-
-//    public void actionPerformed(ActionEvent e) {
-//        Object source = e.getSource();
-//        if (source == menuPanel.getStartButton()) {
-//            startLevel(1);
-//        } else if (source == menuPanel.getLevelsButton()) {
-//            levels();
-//        } else if (source == menuPanel.getSettingsButton()) {
-//            goToSettings();
-//        } else if (source == menuPanel.getBackFromSettingsButton() || source == menuPanel.getBackFromLevelsButton()) {
-//            goToMenu();
-//        } else if (menuPanel.getLevelButtons().contains(source)) {
-//            int level = Integer.parseInt(((JButton) source).getText().substring(6));
-//            startLevel(level);
-//        } else if (source == menuPanel.getExitButton()) {
-//            System.exit(0);
-//        }
-//    }
 }
 

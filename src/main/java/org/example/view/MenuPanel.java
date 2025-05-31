@@ -21,6 +21,7 @@ public class MenuPanel extends JPanel {
     private JPanel settingsPanel;
     private VolumeSlider volumeSlider;
     private JComboBox<String> sizeSelector;
+    private JComboBox<String> speedSelector;
 
 
     private int numberOfLevels = 2;
@@ -124,8 +125,25 @@ public class MenuPanel extends JPanel {
         sizeSelector = new JComboBox<>();
         initSizeSelector();
 
+        speedSelector = new JComboBox<>();
+        initSpeedSelector();
+
         settingsPanel.add(sizeSelector);
+        settingsPanel.add(speedSelector);
         settingsPanel.setVisible(false);
+    }
+
+    private void initSpeedSelector() {
+        String[] sizeOptions = {
+                "Slow",
+                "Medium",
+                "Fast"
+        };
+        speedSelector.setModel(new DefaultComboBoxModel<>(sizeOptions));
+        speedSelector.setSelectedIndex(1);
+        speedSelector.setBounds((MENU_PANEL_WIDTH - 2 * BUTTON_WIDTH) / 2, BUTTON_MARGIN * 8, 2 * BUTTON_WIDTH, BUTTON_HEIGHT);
+        speedSelector.setBackground(BUTTON_COLOR);
+        speedSelector.setFont(BUTTON_FONT);
     }
 
     private void initSizeSelector() {
@@ -151,7 +169,7 @@ public class MenuPanel extends JPanel {
 
         // Create and position the volume slider
         volumeSlider = new VolumeSlider();
-        volumeSlider.setBounds((MENU_PANEL_WIDTH - 250) / 2, (MENU_PANEL_HEIGHT - 50) / 2, 250, 70); // adjust position as needed
+        volumeSlider.setBounds((MENU_PANEL_WIDTH - 250) / 2, BUTTON_MARGIN * 10, 250, 70); // adjust position as needed
         settingsPanel.add(volumeSlider);
 
         levelsPanel.setVisible(false);
@@ -260,6 +278,14 @@ public class MenuPanel extends JPanel {
 
     public VolumeSlider getVolumeSlider() {
         return volumeSlider;
+    }
+
+    public JComboBox<String> getSizeSelector() {
+        return sizeSelector;
+    }
+
+    public JComboBox<String> getSpeedSelector() {
+        return speedSelector;
     }
 }
 

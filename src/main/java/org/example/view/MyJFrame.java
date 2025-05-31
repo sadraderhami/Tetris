@@ -42,4 +42,10 @@ public class MyJFrame extends JFrame {
     public JPanel getMainPanel() {
         return mainPanel;
     }
+
+    public void revalidateSizes() {
+        this.pack();
+        this.revalidate();
+        this.repaint();
+    }
 }

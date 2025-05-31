@@ -37,6 +37,7 @@ public class GameOverPanel extends JPanel {
         add(Box.createRigidArea(new Dimension(0, 10)));
         add(backToMenuButton);
         add(Box.createVerticalGlue());
+        this.setVisible(false);
     }
 
     public JButton getRestartButton() {

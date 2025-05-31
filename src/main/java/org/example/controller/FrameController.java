@@ -6,6 +6,8 @@ import org.example.view.MyJFrame;
 import javax.swing.*;
 import java.awt.*;
 
+import static org.example.config.ViewConstants.*;
+
 public class FrameController {
     private MyJFrame frame;
     private JPanel mainPanel;
@@ -40,6 +42,10 @@ public class FrameController {
 
     public void showGameModel(MyLevel level) {
         cardLayout.show(mainPanel, GAME);
+        frame.revalidateSizes();
+    }
+    public void revalidateSizes() {
+        frame.revalidateSizes();
     }
 
 
