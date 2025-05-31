@@ -1,8 +1,5 @@
 package org.example.view;
 
-
-import org.example.controller.MenuController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -11,8 +8,6 @@ import java.util.ArrayList;
 import static org.example.config.ViewConstants.MenuConstants.*;
 
 public class MenuPanel extends JPanel {
-
-    private MenuController menuController;
 
     private JPanel startPanel;
     private JButton startButton;
@@ -24,7 +19,8 @@ public class MenuPanel extends JPanel {
     private JButton backFromLevelsButton;
 
     private JPanel settingsPanel;
-//    private VolumeSlider volumeSlider;
+    private VolumeSlider volumeSlider;
+    private JComboBox<String> sizeSelector;
 
 
     private int numberOfLevels = 2;
@@ -38,10 +34,6 @@ public class MenuPanel extends JPanel {
         setSettingsPanel();
         setLevelsPanel();
         this.setVisible(true);
-    }
-
-    public void setMenuController(MenuController menuController) {
-        this.menuController = menuController;
     }
 
     @Override
@@ -128,7 +120,25 @@ public class MenuPanel extends JPanel {
         settingsPanel = new JPanel();
         backFromSettingsButton = new JButton();
         setPanelAndButtons(settingsPanel, new JButton[]{backFromSettingsButton}, new String[]{"Back"});
+
+        sizeSelector = new JComboBox<>();
+        initSizeSelector();
+
+        settingsPanel.add(sizeSelector);
         settingsPanel.setVisible(false);
+    }
+
+    private void initSizeSelector() {
+        String[] sizeOptions = {
+                "Small (10×20)",
+                "Medium (15×25)",
+                "Large (20×30)"
+        };
+        sizeSelector.setModel(new DefaultComboBoxModel<>(sizeOptions));
+        sizeSelector.setSelectedIndex(1);
+        sizeSelector.setBounds((MENU_PANEL_WIDTH - 2 * BUTTON_WIDTH) / 2, BUTTON_MARGIN * 6, 2 * BUTTON_WIDTH, BUTTON_HEIGHT);
+        sizeSelector.setBackground(BUTTON_COLOR);
+        sizeSelector.setFont(BUTTON_FONT);
     }
 
     public void setLevelsPanel() {
@@ -140,9 +150,9 @@ public class MenuPanel extends JPanel {
         setPanelAndButtons(levelsPanel, levelButtons);
 
         // Create and position the volume slider
-//        volumeSlider = new VolumeSlider();
-//        volumeSlider.setBounds((WIDTH - 250) / 2, (HEIGHT - 50) / 2, 250, 70); // adjust position as needed
-//        settingsPanel.add(volumeSlider);
+        volumeSlider = new VolumeSlider();
+        volumeSlider.setBounds((MENU_PANEL_WIDTH - 250) / 2, (MENU_PANEL_HEIGHT - 50) / 2, 250, 70); // adjust position as needed
+        settingsPanel.add(volumeSlider);
 
         levelsPanel.setVisible(false);
     }
@@ -238,7 +248,7 @@ public class MenuPanel extends JPanel {
         this.startButton = startButton;
     }
 
-    public void setActionListeners(ActionListener actionListener) {
+    public void addActionListeners(ActionListener actionListener) {
         levelsButton.addActionListener(actionListener);
         settingsButton.addActionListener(actionListener);
         exitButton.addActionListener(actionListener);
@@ -248,8 +258,8 @@ public class MenuPanel extends JPanel {
     }
 
 
-//    public VolumeSlider getVolumeSlider() {
-//        return volumeSlider;
-//    }
+    public VolumeSlider getVolumeSlider() {
+        return volumeSlider;
+    }
 }
 

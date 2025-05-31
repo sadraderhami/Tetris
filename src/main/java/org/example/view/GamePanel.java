@@ -12,15 +12,34 @@ import static org.example.config.ViewConstants.GameConstants.TetrisPanelConstant
 public class GamePanel extends JPanel {
     private TetrisPanel tetrisPanel;
     private SidePanel sidePanel;
+    private GameOverPanel gameOverPanel;
 
     public GamePanel(GameModel gameModel) {
         this.setLayout(null);
         sidePanel = new SidePanel();
-        initSidePanel();
         tetrisPanel = new TetrisPanel(gameModel);
+        gameOverPanel = new GameOverPanel();
+
+        initSidePanel();
         initTetrisPanel();
-        this.add(tetrisPanel);
+        initGameOverPanel();
+
         this.add(sidePanel);
+        this.add(tetrisPanel);
+        this.add(gameOverPanel);
+    }
+
+
+    public TetrisPanel getTetrisPanel() {
+        return tetrisPanel;
+    }
+
+    public SidePanel getSidePanel() {
+        return sidePanel;
+    }
+
+    public GameOverPanel getGameOverPanel() {
+        return gameOverPanel;
     }
 
     private void initSidePanel() {
@@ -33,5 +52,28 @@ public class GamePanel extends JPanel {
         tetrisPanel.setSize(TETRIS_PANEL_WIDTH, TETRIS_PANEL_HEIGHT);
         tetrisPanel.setLocation(0, 0);
         tetrisPanel.setLayout(null);
+    }
+
+    private void initGameOverPanel() {
+        gameOverPanel.setSize(GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
+        gameOverPanel.setLocation(0, 0);
+        this.setVisible(false);
+    }
+
+    public void reset(){
+        hideGameOverPanel();
+        sidePanel.reset();
+        tetrisPanel.reset();
+    }
+
+    public void showGameOverPanel() {
+        tetrisPanel.setVisible(false);
+        sidePanel.setVisible(false);
+        gameOverPanel.setVisible(true);
+    }
+    public void hideGameOverPanel() {
+        tetrisPanel.setVisible(true);
+        sidePanel.setVisible(true);
+        gameOverPanel.setVisible(false);
     }
 }

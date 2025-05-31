@@ -14,7 +14,11 @@ public class CellBlockView {
         this.cellBlockModel = cellBlockModel;
     }
 
-    public void paint(Graphics2D g2d) {
-        g2d.fillRect(cellBlockModel.getX(), cellBlockModel.getY(), CELL_SIZE, CELL_SIZE);
+    public void paint(Graphics2D g2d, int absoluteX, int absoluteY) {
+        g2d.setColor(ACTIVE_TETROMINO_COLOR);
+        int cellBlockSize = (int) (CELL_SIZE * 0.9);
+        g2d.fillRect(absoluteX * CELL_SIZE,
+                absoluteY * CELL_SIZE,
+                cellBlockSize, cellBlockSize);
     }
 }

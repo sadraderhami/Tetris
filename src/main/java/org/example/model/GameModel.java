@@ -1,263 +1,252 @@
 package org.example.model;
 
-import java.util.Random;
+import static org.example.config.ModelConstants.*;
 
 public class GameModel {
-    boolean[][] boardCells = new boolean[20][10];
-
-    int[][] LShapeX = {{1, 0, 0, 0}, {0, 1, 2, 2}, {1, 1, 1, 0}, {0, 0, 1, 2}};
-    int[][] LShapeY = {{2, 2, 1, 0}, {1, 1, 1, 0}, {2, 1, 0, 0}, {1, 0, 0, 0}};
-    int[][] SShapeX = {{0, 1, 1, 2}, {1, 1, 0, 0}, {0, 1, 1, 2}, {1, 1, 0, 0}};
-    int[][] SShapeY = {{1, 1, 0, 0}, {2, 1, 1, 0}, {1, 1, 0, 0}, {2, 1, 1, 0}};
-    int[][] ZShapeX = {{2, 1, 1, 0}, {1, 1, 0, 0}, {2, 1, 1, 0}, {1, 1, 0, 0}};
-    int[][] ZShapeY = {{1, 1, 0, 0}, {0, 1, 1, 2}, {1, 1, 0, 0}, {0, 1, 1, 2}};
-    int[][] RevLShapeX = {{0, 1, 1, 1}, {2, 2, 1, 0}, {0, 0, 0, 1}, {2, 1, 0, 0}};
-    int[][] RevLShapeY = {{2, 2, 1, 0}, {1, 0, 0, 0}, {2, 1, 0, 0}, {1, 1, 1, 0}};
-    int[][] TShapeX = {{1, 2, 1, 0}, {0, 0, 0, 1}, {2, 1, 0, 1}, {1, 1, 1, 0}};
-    int[][] TShapeY = {{1, 0, 0, 0}, {2, 1, 0, 1}, {1, 1, 1, 0}, {2, 1, 0, 1}};
-    int[][] SquareShapeX = {{1, 0, 1, 0}, {1, 0, 1, 0}, {1, 0, 1, 0}, {1, 0, 1, 0}};
-    int[][] SquareShapeY = {{1, 1, 0, 0}, {1, 1, 0, 0}, {1, 1, 0, 0}, {1, 1, 0, 0}};
-    int[][] IShapeX = {{0, 0, 0, 0}, {0, 1, 2, 3}, {0, 0, 0, 0}, {0, 1, 2, 3}};
-    int[][] IShapeY = {{3, 2, 1, 0}, {0, 0, 0, 0}, {3, 2, 1, 0}, {0, 0, 0, 0}};
-
-    int[] shapeStartingPosition = {4, 0};
-    String shape;
-    ShapeModel currentShape = new ShapeModel(ShapeType.S);
-    int angle;
-    boolean shapeReachedBottom = false;
-    boolean newShapeGenerated = false;
-    boolean paused = false;
-    boolean started = false;
-    int panelScore = 0;
-//    Timer timer;
-
-
-
-    public GameModel() {
-//        timer = new Timer(300, e -> {
-//            dropShape();
-////            labelScoreUpdateLocal.setText(String.valueOf(panelScore));
-//        });
-    }
+    private boolean[][] boardCells = new boolean[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
+    private ShapeModel currentShape;
+//    private boolean shapeReachedBottom = false;
+//    private boolean newShapeGenerated = false;
+//    private boolean paused = false;
+//    private boolean started = false;
+    private int score = 0;
 
     public ShapeModel getCurrentShape() {
         return currentShape;
-    }
-
-    public boolean isGameOver(){
-        return false;
     }
 
     public boolean[][] getBoardCells() {
         return boardCells;
     }
 
-    public void update(){
-        dropShape();
+    public int getScore() {
+        return score;
     }
 
     public void startGame() {
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 10; j++) {
-                boardCells[i][j] = false;
-            }
-        }
+        resetTheBoard();
         generateNewShape();
-        started = true;
-        paused = false;
-//        timer.start();
     }
 
-    public void resetGame() {
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 10; j++) {
+    private void resetTheBoard() {
+        for (int i = 0; i < NUMBER_OF_ROWS; i++) {
+            for (int j = 0; j < NUMBER_OF_COLUMNS; j++) {
                 boardCells[i][j] = false;
             }
         }
-        generateNewShape();
-        panelScore = 0;
-//        timer.stop();
+    }
+    private void resetTheScore(){
+        score = 0;
+    }
+
+    public void restartGame() {
+        resetTheScore();
+        startGame();
     }
 
     public void generateNewShape() {
-        shapeReachedBottom = false;
-        shapeStartingPosition[0] = 4;
-        shapeStartingPosition[1] = 0;
-        angle = new Random().nextInt(4);
-        String[] shapes = {"L", "S", "Z", "RL", "T", "SQ", "I"};
-        shape = shapes[new Random().nextInt(shapes.length)];
-//        shape = Shape.getRandomShape();
-        newShapeGenerated = true;
+        currentShape = ShapeModel.getRandomShape();
     }
 
-    boolean gameOver() {
-        for (int j = 0; j < 10; j++) {
-            if (boardCells[0][j])
+    public boolean isGameOver() {
+        for (int j = 0; j < NUMBER_OF_COLUMNS; j++) {
+            if (boardCells[10][j])
+//
                 return true;
         }
         return false;
     }
 
-    public void dropShape() {
-        int maxY = getMax(getYCoordinates());
-        int bottom = shapeStartingPosition[1] + maxY;
-        boolean collision = false;
-        int[] xs = getXCoordinates();
-        int[] ys = getYCoordinates();
-        for (int i = 0; i < 4; i++) {
-            int x = shapeStartingPosition[0] + xs[i];
-            int y = shapeStartingPosition[1] + ys[i];
-            if (y + 1 < 20 && boardCells[y + 1][x]) {
-                collision = true;
-                break;
-            }
+    public void handleGameOver() {
+
+    }
+
+    private void lockCurrentShapeAndProceed() {
+        // 1. Lock shape into board
+        for (CellBlockModel cellBlockModel : currentShape.getCellBlocks()) {
+            int x = (int) (currentShape.getOrigin().getX() + cellBlockModel.getPositionInShape().getX() + currentShape.getTraveledX());
+            int y = (int) (currentShape.getOrigin().getY() + cellBlockModel.getPositionInShape().getY() + currentShape.getTraveledY());
+            boardCells[y][x] = true;
         }
-        if (bottom < 20 - 1 && !collision) {
-            shapeStartingPosition[1]++;
-        } else {
-            for (int i = 0; i < 4; i++) {
-                boardCells[shapeStartingPosition[1] + ys[i]][shapeStartingPosition[0] + xs[i]] = true;
-            }
-            clearFullLines();
-            newShapeGenerated = false;
-            if (!gameOver()) {
-                generateNewShape();
-            } else {
-//                timer.stop();
-            }
+
+        // 2. Clear lines
+        clearFullLines();
+
+        // 3. Check game over
+        if (isGameOver()) {
+            handleGameOver(); // Optional: centralize end-game logic
+            return;
+        }
+
+        // 4. Generate next shape
+        generateNewShape();
+    }
+
+
+    public void dropShapeIfPossible() {
+//        int maxY = getMax(getYCoordinates());
+//        int bottom = shapeStartingPosition[1] + maxY;
+//        boolean collision = false;
+//        int[] xs = getXCoordinates();
+//        int[] ys = getYCoordinates();
+//        for (int i = 0; i < 4; i++) {
+//            int x = shapeStartingPosition[0] + xs[i];
+//            int y = shapeStartingPosition[1] + ys[i];
+//            if (y + 1 < NUMBER_OF_ROWS && boardCells[y + 1][x]) {
+//                collision = true;
+//                break;
+//            }
+//        }
+//        if (bottom < NUMBER_OF_ROWS - 1 && !collision) {
+//            shapeStartingPosition[1]++;
+//            currentShape.moveDown();
+//        } else {
+//            for (int i = 0; i < 4; i++) {
+//                boardCells[shapeStartingPosition[1] + ys[i]][shapeStartingPosition[0] + xs[i]] = true;
+//            }
+//            clearFullLines();
+//            newShapeGenerated = false;
+//            if (!gameOver()) {
+//                generateNewShape();
+//            } else {
+////                timer.stop();
+//            }
+//        }
+        currentShape.moveDown();
+        if (!isStable(currentShape)) {
+            currentShape.moveUp();
+            lockCurrentShapeAndProceed();
+        }
+
+    }
+
+
+    public void moveRightIfPossible() {
+        currentShape.moveRight();
+        if (!isStable(currentShape)) {
+            currentShape.moveLeft();
         }
     }
 
-    public void moveRight() {
-        int maxX = getMax(getXCoordinates());
-        int right = shapeStartingPosition[0] + maxX;
-        boolean collision = false;
-        int[] xs = getXCoordinates();
-        int[] ys = getYCoordinates();
-        for (int i = 0; i < 4; i++) {
-            int x = shapeStartingPosition[0] + xs[i];
-            int y = shapeStartingPosition[1] + ys[i];
-            if (x + 1 < 10 && boardCells[y][x + 1]) {
-                collision = true;
-                break;
-            }
-        }
-        if (!collision && right < 10 - 1) {
-            shapeStartingPosition[0]++;
+
+    public void moveLeftIfPossible() {
+        currentShape.moveLeft();
+        if (!isStable(currentShape)) {
+            currentShape.moveRight();
         }
     }
 
-    public void moveLeft() {
-        int minX = getMin(getXCoordinates());
-        int left = shapeStartingPosition[0] + minX;
-        boolean collision = false;
-        int[] xs = getXCoordinates();
-        int[] ys = getYCoordinates();
-        for (int i = 0; i < 4; i++) {
-            int x = shapeStartingPosition[0] + xs[i];
-            int y = shapeStartingPosition[1] + ys[i];
-            if (x - 1 >= 0 && boardCells[y][x - 1]) {
-                collision = true;
-                break;
-            }
-        }
-        if (!collision && left > 0) {
-            shapeStartingPosition[0]--;
+    public void rotateIfPossible() {
+        currentShape.rotateCounterClockwise();
+        if (!isStable(currentShape)) {
+            currentShape.rotateClockwise();
         }
     }
 
-    public void rotate() {
-        int oldAngle = angle;
-        angle = (angle == 0 ? 3 : angle - 1);
-        int[] xs = getXCoordinates();
-        int[] ys = getYCoordinates();
-        for (int i = 0; i < 4; i++) {
-            int x = shapeStartingPosition[0] + xs[i];
-            int y = shapeStartingPosition[1] + ys[i];
-            if (x < 0 || x >= 10 || (y < 20 && boardCells[y][x])) {
-                angle = oldAngle;
-                break;
+
+    public boolean isStable(ShapeModel shapeModel) {
+        for (CellBlockModel cellBlockModel : shapeModel.getCellBlocks()) {
+            double absoluteX = shapeModel.getOrigin().getX() +
+                    cellBlockModel.getPositionInShape().getX() +
+                    shapeModel.getTraveledX();
+            double absoluteY = shapeModel.getOrigin().getY() +
+                    cellBlockModel.getPositionInShape().getY() +
+                    shapeModel.getTraveledY();
+            if (absoluteX < 0 || absoluteX >= NUMBER_OF_COLUMNS) {
+                return false;
+            }
+            if (absoluteY < 0 || absoluteY >= NUMBER_OF_ROWS) {
+                return false;
+            }
+            if (boardCells[(int) absoluteY][(int) absoluteX]) {
+                return false;
             }
         }
+        return true;
     }
 
+//    public boolean isThisLineFull(int indexFromTheTop) {
+//        for (int i = 0; i < NUMBER_OF_ROWS; i++) {
+//            for (int j = 0; j < NUMBER_OF_COLUMNS; j++) {
+//                if (!boardCells[i][j]) {
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
+
+    //    public void clearFullLines() {
+//        int linesCleared = 0;
+//        for (int i = NUMBER_OF_COLUMNS - 1; i >= 0; i--) {
+//            boolean full = true;
+//            for (int j = 0; j < NUMBER_OF_ROWS; j++) {
+//                if (!boardCells[i][j]) {
+//                    full = false;
+//                    break;
+//                }
+//            }
+//            if (full) {
+//                linesCleared++;
+//                for (int k = i; k > 0; k--) {
+//                    boardCells[k] = boardCells[k - 1].clone();
+//                }
+//                boardCells[0] = new boolean[NUMBER_OF_COLUMNS];
+//                i++;
+//            }
+//        }
+//        switch (linesCleared) {
+//            case 1:
+//                score += 1;
+//                break;
+//            case 2:
+//                score += 3;
+//                break;
+//            case 3:
+//                score += 5;
+//                break;
+//            case 4:
+//                score += 10;
+//                break;
+//        }
+//    }
     public void clearFullLines() {
         int linesCleared = 0;
-        for (int i = 20 - 1; i >= 0; i--) {
-            boolean full = true;
-            for (int j = 0; j < 10; j++) {
-                if (!boardCells[i][j]) {
-                    full = false;
-                    break;
-                }
-            }
-            if (full) {
+
+        for (int row = NUMBER_OF_ROWS - 1; row >= 0; row--) {
+            if (isRowFull(row)) {
+                removeRow(row);
+                row++; // recheck same row after shifting down
                 linesCleared++;
-                for (int k = i; k > 0; k--) {
-                    boardCells[k] = boardCells[k - 1].clone();
-                }
-                boardCells[0] = new boolean[10];
-                i++;
             }
         }
+
+        updateScore(linesCleared);
+    }
+
+    private boolean isRowFull(int row) {
+        for (int col = 0; col < NUMBER_OF_COLUMNS; col++) {
+            if (!boardCells[row][col]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void removeRow(int rowToRemove) {
+        for (int row = rowToRemove; row > 0; row--) {
+            boardCells[row] = boardCells[row - 1].clone();
+        }
+        boardCells[0] = new boolean[NUMBER_OF_COLUMNS];
+    }
+
+    private void updateScore(int linesCleared) {
         switch (linesCleared) {
-            case 1:
-                panelScore += 1;
-                break;
-            case 2:
-                panelScore += 3;
-                break;
-            case 3:
-                panelScore += 5;
-                break;
-            case 4:
-                panelScore += 10;
-                break;
+            case 1 -> score += 1;
+            case 2 -> score += 3;
+            case 3 -> score += 5;
+            case 4 -> score += 10;
         }
     }
 
-    int[] getXCoordinates() {
-        return switch (shape) {
-            case "L" -> LShapeX[angle];
-            case "S" -> SShapeX[angle];
-            case "Z" -> ZShapeX[angle];
-            case "RL" -> RevLShapeX[angle];
-            case "T" -> TShapeX[angle];
-            case "SQ" -> SquareShapeX[angle];
-            case "I" -> IShapeX[angle];
-            default -> LShapeX[angle];
-        };
-
-    }
-
-    int[] getYCoordinates() {
-        return switch (shape) {
-            case "L" -> LShapeY[angle];
-            case "S" -> SShapeY[angle];
-            case "Z" -> ZShapeY[angle];
-            case "RL" -> RevLShapeY[angle];
-            case "T" -> TShapeY[angle];
-            case "SQ" -> SquareShapeY[angle];
-            case "I" -> IShapeY[angle];
-            default -> LShapeY[angle];
-        };
-    }
-
-    int getMax(int[] arr) {
-        int max = arr[0];
-        for (int i = 1; i < arr.length; i++) {
-            if (arr[i] > max)
-                max = arr[i];
-        }
-        return max;
-    }
-
-    int getMin(int[] arr) {
-        int min = arr[0];
-        for (int i = 1; i < arr.length; i++) {
-            if (arr[i] < min)
-                min = arr[i];
-        }
-        return min;
-    }
 }

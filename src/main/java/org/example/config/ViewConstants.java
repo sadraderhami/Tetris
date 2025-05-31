@@ -1,74 +1,19 @@
-//package org.example.config;
-//
-//import java.awt.*;
-//
-//public class ViewConstants {
-//    public static final int CELL_SIZE = 40;
-//    public static final int FRAME_WIDTH = 16 * CELL_SIZE;
-//    public static final int FRAME_HEIGHT = 21 * CELL_SIZE;
-//
-//    public static final Color BUTTON_COLOR = new Color(255, 196, 0);
-//    public static final Color BACKGROUND_TOP_COLOR = new Color(33, 182, 0);
-//    public static final Color BACKGROUND_BOTTOM_COLOR = new Color(132, 255, 0);
-//    public static final Color GLOWING_LINE_FIRST_SHADOW = new Color(35, 22, 0);
-//    public static final Color GLOWING_LINE_SECOND_SHADOW = new Color(89, 64, 0);
-//    public static final Color GLOWING_LINE_THIRD_SHADOW = new Color(161, 124, 0);
-//
-//    public static class MenuConstants {
-//        public static final int CELL_SIZE = ViewConstants.CELL_SIZE;
-//        public static final int MENU_PANEL_WIDTH = ViewConstants.FRAME_WIDTH;
-//        public static final int MENU_PANEL_HEIGHT = ViewConstants.FRAME_HEIGHT;
-//        public static final int BUTTON_HEIGHT = CELL_SIZE;
-//        public static final int BUTTON_MARGIN = CELL_SIZE;
-//        public static final int BUTTON_WIDTH = 4 * CELL_SIZE;
-//        public static final Color BUTTON_COLOR = ViewConstants.BUTTON_COLOR;
-//        public static final Font BUTTON_FONT = new Font("Bauhaus 93", Font.BOLD, 20);
-//        public static final GradientPaint MENU_PANEL_GRADIANT_PAINT = new GradientPaint(0, 0, BACKGROUND_TOP_COLOR, 0, MENU_PANEL_HEIGHT, BACKGROUND_BOTTOM_COLOR);
-//        public static final Color GLOWING_LINE_FIRST_SHADOW = ViewConstants.GLOWING_LINE_FIRST_SHADOW;
-//        public static final Color GLOWING_LINE_SECOND_SHADOW = ViewConstants.GLOWING_LINE_SECOND_SHADOW;
-//        public static final Color GLOWING_LINE_THIRD_SHADOW = ViewConstants.GLOWING_LINE_THIRD_SHADOW;
-//
-//    }
-//
-//    public static class GameConstants {
-//        public static final int CELL_SIZE = ViewConstants.CELL_SIZE;
-//        public static final int GAME_PANEL_WIDTH = FRAME_WIDTH;
-//        public static final int GAME_PANEL_HEIGHT = FRAME_HEIGHT;
-//        public static final int BUTTON_HEIGHT = CELL_SIZE;
-//        public static final int BUTTON_WIDTH = 4 * CELL_SIZE;
-//        public static final Color BUTTON_COLOR = ViewConstants.BUTTON_COLOR;
-//        public static final Font BUTTON_FONT = new Font("Bauhaus 93", Font.BOLD, 20);
-//        public static class TetrisPanelConstants {
-//            public static final int CELL_SIZE = GameConstants.CELL_SIZE;
-//            public static final int TETRIS_PANEL_WIDTH = 10 * CELL_SIZE;
-//            public static final int TETRIS_PANEL_HEIGHT = GAME_PANEL_HEIGHT;
-//            public static final Color GLOWING_LINE_FIRST_SHADOW = ViewConstants.GLOWING_LINE_FIRST_SHADOW;
-//            public static final Color GLOWING_LINE_SECOND_SHADOW = ViewConstants.GLOWING_LINE_SECOND_SHADOW;
-//            public static final Color GLOWING_LINE_THIRD_SHADOW = ViewConstants.GLOWING_LINE_THIRD_SHADOW;
-//            public static final GradientPaint GAME_PANEL_GRADIANT_PAINT = new GradientPaint(0, 0, BACKGROUND_TOP_COLOR, 0, GAME_PANEL_HEIGHT, BACKGROUND_BOTTOM_COLOR);
-//        }
-//
-//        public static class SidePanelConstants {
-//            public static final int SIDE_PANEL_WIDTH = GAME_PANEL_WIDTH - TetrisPanelConstants.TETRIS_PANEL_WIDTH;
-//            public static final int SIDE_PANEL_HEIGHT = GAME_PANEL_HEIGHT;
-//
-//        }
-//    }
-//}
 package org.example.config;
 
 import com.google.gson.JsonObject;
 
 import java.awt.*;
 
+import static org.example.config.ModelConstants.*;
+
 public class ViewConstants {
     public static int CELL_SIZE = 40;
     public static int FRAME_WIDTH = 16 * CELL_SIZE;
-    public static int FRAME_HEIGHT = 17 * CELL_SIZE;
+    public static int FRAME_HEIGHT = NUMBER_OF_ROWS * CELL_SIZE;
 
     public static Color BUTTON_COLOR = new Color(255, 196, 0);
-    public static Color BACKGROUND_TOP_COLOR = new Color(33, 182, 0);
-    public static Color BACKGROUND_BOTTOM_COLOR = new Color(132, 255, 0);
+    public static Color BACKGROUND_TOP_COLOR = new Color(132, 255, 0);
+    public static Color BACKGROUND_BOTTOM_COLOR = new Color(22, 104, 0);
     public static Color GLOWING_LINE_FIRST_SHADOW = new Color(35, 22, 0);
     public static Color GLOWING_LINE_SECOND_SHADOW = new Color(89, 64, 0);
     public static Color GLOWING_LINE_THIRD_SHADOW = new Color(161, 124, 0);
@@ -99,12 +44,14 @@ public class ViewConstants {
 
         public static class TetrisPanelConstants {
             public static int CELL_SIZE = GameConstants.CELL_SIZE;
-            public static int TETRIS_PANEL_WIDTH = 10 * CELL_SIZE;
+            public static int TETRIS_PANEL_WIDTH = NUMBER_OF_COLUMNS * CELL_SIZE;
             public static int TETRIS_PANEL_HEIGHT = GAME_PANEL_HEIGHT;
             public static Color GLOWING_LINE_FIRST_SHADOW = ViewConstants.GLOWING_LINE_FIRST_SHADOW;
             public static Color GLOWING_LINE_SECOND_SHADOW = ViewConstants.GLOWING_LINE_SECOND_SHADOW;
             public static Color GLOWING_LINE_THIRD_SHADOW = ViewConstants.GLOWING_LINE_THIRD_SHADOW;
             public static GradientPaint GAME_PANEL_GRADIANT_PAINT = new GradientPaint(0, 0, BACKGROUND_TOP_COLOR, 0, GAME_PANEL_HEIGHT, BACKGROUND_BOTTOM_COLOR);
+            public static Color STABLE_TETROMINO_COLOR = new Color(0, 255, 111);
+            public static Color ACTIVE_TETROMINO_COLOR = Color.MAGENTA;
         }
 
         public static class SidePanelConstants {

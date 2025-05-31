@@ -7,18 +7,21 @@ import javax.swing.*;
 import java.awt.*;
 
 
+import static org.example.config.ModelConstants.*;
 import static org.example.config.ViewConstants.GameConstants.TetrisPanelConstants.*;
 
 
 public class TetrisPanel extends JPanel {
-    //    private GameController gameController;
-//    private GameView gameView;
     private GameModel gameModel;
 
     public TetrisPanel(GameModel gameModel) {
         this.gameModel = gameModel;
         this.setLayout(null);
-//        this.gameView = gameView;
+        this.setFocusable(true);
+    }
+
+    public void reset() {
+        this.setVisible(true);
     }
 
 
@@ -27,9 +30,18 @@ public class TetrisPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         paintBackGroundGrid(g2d);
+        g2d.setColor(ACTIVE_TETROMINO_COLOR);
         if (gameModel.getCurrentShape() != null) {
             ShapeView shapeView = new ShapeView(gameModel.getCurrentShape());
             shapeView.paint(g2d);
+        }
+        for (int i = 0; i < NUMBER_OF_ROWS; i++) {
+            for (int j = 0; j < NUMBER_OF_COLUMNS; j++) {
+                if (gameModel.getBoardCells()[i][j]) {
+                    g2d.setColor(STABLE_TETROMINO_COLOR);
+                    g2d.fillRect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                }
+            }
         }
     }
 

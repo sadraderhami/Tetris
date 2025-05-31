@@ -69,11 +69,11 @@
 //
 //        startButton.addActionListener(e -> {
 //            if (!started) {
-//                startGame();
+//                showGameModel();
 //                startButton.setText("Reset");
 //                started = true;
 //            } else {
-//                resetGame();
+//                restartGame();
 //                startButton.setText("Start");
 //                started = false;
 //            }
@@ -113,7 +113,7 @@
 //        add(gamePanel);
 //    }
 //
-//    void startGame() {
+//    void showGameModel() {
 //        for (int i = 0; i < 20; i++) {
 //            for (int j = 0; j < 10; j++) {
 //                boardCells[i][j] = false;
@@ -125,7 +125,7 @@
 //        timer.start();
 //    }
 //
-//    void resetGame() {
+//    void restartGame() {
 //        for (int i = 0; i < 20; i++) {
 //            for (int j = 0; j < 10; j++) {
 //                boardCells[i][j] = false;
@@ -184,7 +184,7 @@
 //        }
 //    }
 //
-//    void moveRight() {
+//    void moveRightIfPossible() {
 //        int maxX = getMax(getXCoordinates());
 //        int right = shapeStartingPosition[0] + maxX;
 //        boolean collision = false;
@@ -203,7 +203,7 @@
 //        }
 //    }
 //
-//    void moveLeft() {
+//    void moveLeftIfPossible() {
 //        int minX = getMin(getXCoordinates());
 //        int left = shapeStartingPosition[0] + minX;
 //        boolean collision = false;
@@ -367,9 +367,9 @@
 //            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 //                dropShape();
 //            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//                moveRight();
+//                moveRightIfPossible();
 //            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//                moveLeft();
+//                moveLeftIfPossible();
 //            }
 //            repaint();
 //        }

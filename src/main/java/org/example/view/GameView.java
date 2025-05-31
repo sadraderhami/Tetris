@@ -4,27 +4,36 @@ import org.example.model.GameModel;
 
 import java.awt.*;
 
+import static org.example.config.ViewConstants.GameConstants.*;
+
 public class GameView {
-//    private GameModel gameModel;
     private GamePanel gamePanel;
 
     public GameView(GameModel gameModel) {
         gamePanel = new GamePanel(gameModel);
+        gamePanel.setPreferredSize(new Dimension(GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT));
     }
 
     public void repaint() {
         gamePanel.repaint();
-//        paint((Graphics2D) gamePanel.getGraphics());
+    }
+
+    public void revalidate() {
+        gamePanel.revalidate();
+    }
+
+    public void reset() {
+        this.revalidate();
+        this.repaint();
+        this.getGamePanel().reset();
     }
 
     public GamePanel getGamePanel() {
         return gamePanel;
     }
 
-//    public void paint(Graphics2D g2d) {
-////        gameModel.getBoardCells();
-//        gamePanel.paintComponents(g2d);
-//        g2d.setColor(Color.black);
-//        g2d.fillRect(0, 0, gamePanel.getWidth(), gamePanel.getHeight());
-//    }
+    public void handleGameOver(GameModel gameModel) {
+        gamePanel.getGameOverPanel().setScore(gameModel.getScore());
+        gamePanel.showGameOverPanel();
+    }
 }

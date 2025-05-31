@@ -6,6 +6,8 @@ import org.example.view.MenuPanel;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -15,16 +17,26 @@ public class MenuController {
     private FrameController frameController;
     private MenuPanel menuPanel;
     private ActionListener actionListener;
+    private ChangeListener changeListener;
 
     public MenuController(FrameController frameController) {
         this.frameController = frameController;
         menuPanel = new MenuPanel();
-        initActionListener();
-        menuPanel.setActionListeners(actionListener);
+        newListener();
+        addListeners();
+        play();
+    }
+    private void newListener() {
+        newActionListener();
+        newChangeListener();
+    }
+
+    private void addListeners() {
+        menuPanel.addActionListeners(actionListener);
         for (JButton button : menuPanel.getLevelButtons()) {
             button.addActionListener(actionListener);
         }
-//        play();
+        menuPanel.getVolumeSlider().addChangeListener(changeListener);
     }
 
     private void play() {
@@ -43,7 +55,7 @@ public class MenuController {
         }
 
         clip.loop(Clip.LOOP_CONTINUOUSLY); // Or start()
-//        menuPanel.getVolumeSlider().attachClip(clip);
+        menuPanel.getVolumeSlider().attachClip(clip);
     }
 
     public MenuPanel getMenuPanel() {
@@ -60,7 +72,7 @@ public class MenuController {
 
     private void startLevel(MyLevel level) {
         System.out.println(level);
-        frameController.startGame(level);
+        frameController.showGameModel(level);
     }
 
     private void goToSettings() {
@@ -81,7 +93,7 @@ public class MenuController {
         return MyLevel.ONE; // default fallback
     }
 
-    private void initActionListener() {
+    private void newActionListener() {
         actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,6 +117,15 @@ public class MenuController {
                 } else if (source == menuPanel.getExitButton()) {
                     System.exit(0);
                 }
+            }
+        };
+    }
+
+    private void newChangeListener() {
+        changeListener = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                menuPanel.getVolumeSlider().updateVolume();
             }
         };
     }

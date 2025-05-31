@@ -28,16 +28,18 @@ public class FrameController {
         mainPanel.add(menuController.getMenuPanel(), MENU);
         mainPanel.add(gameController.getGameView().getGamePanel(), GAME);
 
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        showMenu();
     }
 
     public void showMenu() {
         cardLayout.show(mainPanel, MENU);
     }
 
-    public void startGame(MyLevel level) {
-        gameController.startGame(level);
+    public void showGameModel(MyLevel level) {
         cardLayout.show(mainPanel, GAME);
-
     }
 
 

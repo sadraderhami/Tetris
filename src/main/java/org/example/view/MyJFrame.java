@@ -28,14 +28,11 @@ public class MyJFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
 
-
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
         this.setContentPane(mainPanel);
         this.setResizable(false);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
     }
 
     public CardLayout getCardLayout() {
